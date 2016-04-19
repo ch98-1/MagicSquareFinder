@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 
 	MAXINT d, p, m, ds;//dimention, power, max size, and d squared
 	if(argc != 4){
-		printf("%s <dimention> <power> <max>\nNormal magic square is 3 for dimention, 1 for power, and 15 for max \nIt will print out the generated magic square when finished.\n", argv[0]);
+		printf("%s <dimention> <power> <max>\nNormal magic square is 3 for dimention, 1 for power, and 9 for max \nIt will print out the generated magic square when finished.\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	d = atoll(argv [1]);//read input values
