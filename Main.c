@@ -10,6 +10,7 @@
 //randomly try to find a working magic square
 
 #define MAXINT unsigned long long int//integer to use for calculation
+//#define STARTZERO //start from 0 insted of 1
 
 
 MAXINT count;//trial counter
@@ -22,7 +23,7 @@ static inline void convertsq(const MAXINT *magicsq, MAXINT *psq, const MAXINT *l
 static inline MAXINT checksq(const MAXINT *magicsq, MAXINT d);//returns the magic constant if it is a magic sqare, and 0 if not.
 static inline void printsq(const MAXINT *magicsq, MAXINT d);//print out the magic square
 static inline void setuprand(void);//set up random number generator
-static inline MAXINT randv(MAXINT max);//get random value between 0 and max
+static inline MAXINT randv(MAXINT max);//get random value between 1 (or 0) and max
 void printcount(void);//print how many tries it did
 
 
@@ -42,10 +43,17 @@ int main(int argc, char *argv[]){
 	m = atoll(argv [3]);
 	ds = d*d;
 
+#ifdef STARTZERO //macro choice between including zero or not
+	if (ds - 1 > m){//if not enough number to fill the magic square
+		printf("Can't fill magic square\n");
+		exit(EXIT_FAILURE);
+	}
+#else
 	if (ds > m){//if not enough number to fill the magic square
 		printf("Can't fill magic square\n");
 		exit(EXIT_FAILURE);
 	}
+#endif
 
 	MAXINT *magicsq = malloc(sizeof(MAXINT)*ds);//magic square itself
 	MAXINT *psq = malloc(sizeof(MAXINT)*ds);//magic square converted
@@ -170,8 +178,12 @@ static inline void setuprand(void){//set up random number generator
 }
 
 
-static inline MAXINT randv(MAXINT max){//get random value between 0 and max
+static inline MAXINT randv(MAXINT max){//get random value between 1 and max
+#ifdef STARTZERO //macro choice between including zero or not
 	return ((MAXINT)rand())%(max+1);
+#else
+	return (((MAXINT)rand())%(max))+1;
+#endif
 }
 
 
