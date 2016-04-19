@@ -9,14 +9,15 @@
 
 //randomly try to find a working magic square
 
-#define MAXINT unsigned long long int//integer to use for calculation
+#define MAXINT unsigned long int//integer to use for calculation
+#define MAXINTPRINT "%lu"//format for integer
 //#define STARTZERO //start from 0 insted of 1
 
 
 MAXINT count;//trial counter
 
 
-static inline MAXINT power(unsigned long long base, unsigned long long exponent);//rase base by exponent
+static inline MAXINT power(MAXINT base, MAXINT exponent);//rase base by exponent
 static inline void powertable(MAXINT *lookup, MAXINT max, MAXINT pow);//fill the powertable
 static inline void fillsq(MAXINT *magicsq, MAXINT max, MAXINT ds);//fill magic square with random values below max
 static inline void convertsq(const MAXINT *magicsq, MAXINT *psq, const MAXINT *lookup, MAXINT ds);//convert the magic square by raising it to power on lookup table
@@ -66,7 +67,9 @@ int main(int argc, char *argv[]){
 		count++;
 	} while (checksq(psq, d) == 0);
 	printsq(magicsq, d);//print magic square
-	printf("magic constant = %llu\n", checksq(psq, d));//print magic constant
+	printf("magic constant = ");//print magic constant
+	printf(MAXINTPRINT, checksq(psq, d));
+	printf("\n");
 
 	exit(EXIT_SUCCESS);
 }
@@ -164,9 +167,10 @@ static inline MAXINT checksq(const MAXINT *magicsq, MAXINT d){//returns the magi
 
 static inline void printsq(const MAXINT *magicsq, MAXINT d){//print out the magic square
 	MAXINT i, j;
-	for (i = 0; i < d; i++){//rows
+	for (i = 0; i < d; i++){
 		for (j = 0; j < d; j++){
-			printf("%llu ", magicsq[d*i + j]);
+			printf(MAXINTPRINT, magicsq[d*i + j]);
+			printf(" ");
 		}
 		printf("\n");
 	}
@@ -188,7 +192,9 @@ static inline MAXINT randv(MAXINT max){//get random value between 1 and max
 
 
 void printcount(void){//print how many tries it did
-	printf("Tried %llu times\n", count);
+	printf("Tried ");
+	printf(MAXINTPRINT, count);
+	printf(" times\n");
 }
 
 
